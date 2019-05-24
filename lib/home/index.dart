@@ -108,4 +108,9 @@ class _IndexHomeState extends State<IndexHome> {
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
 }

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class JVideoPlayer extends StatefulWidget {
-  String videoPath;
-
-  JVideoPlayer({@required this.videoPath}) : assert(videoPath.isNotEmpty);
+  final String videoPath;
+  final int focuseIndex;
+  final int index;
+  JVideoPlayer({@required this.videoPath,@required this.index,@required this.focuseIndex}) : assert(videoPath.isNotEmpty);
 
   @override
   State<StatefulWidget> createState() {
@@ -21,7 +22,10 @@ class JVideoPlayerState extends State<JVideoPlayer> {
     super.initState();
     _controller = VideoPlayerController.network(widget.videoPath)
       ..initialize().then((_) {
-        _controller.play();
+        print("focusIndex:"+widget.focuseIndex.toString()+" ; index:"+widget.index.toString());
+        if(widget.focuseIndex == widget.index){
+          _controller.play();
+        }
         setState(() {
           _time = _controller.value.duration.toString();
         });

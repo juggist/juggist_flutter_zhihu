@@ -22,6 +22,8 @@ dependencies:
   video_player: 0.10.1
   flutter_simple_video_player: ^0.0.9
   flutter_easyrefresh: ^1.2.7
+  #获取widget的rect
+  rect_getter: ^0.0.1
 
 dev_dependencies:
   flutter_test:
