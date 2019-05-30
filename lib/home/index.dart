@@ -28,7 +28,9 @@ class _IndexHomeState extends State<IndexHome> {
     JWindow.statusBarTop = _mediaQueryData.padding.top;
     JWindow.statusBarBottom = _mediaQueryData.padding.bottom;
 
-    return DefaultTabController(
+    return
+
+      DefaultTabController(
         length: 3,
         child: Scaffold(
           backgroundColor: GlobalColors.bgColor,

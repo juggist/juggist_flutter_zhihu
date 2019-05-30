@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import './home/index.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'test.dart';
+import 'package:fish_redux/fish_redux.dart';
+import 'home/recommend/index.dart';
+import 'home_page/page.dart';
 
 void main() {
-  runApp(My2App());
+  runApp(App());
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle =
         SystemUiOverlayStyle(statusBarColor: Colors.white);
@@ -13,89 +15,33 @@ void main() {
   }
 }
 
-class My2App extends StatelessWidget {
+class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
-    return MaterialApp(
-      showPerformanceOverlay: true,
-      checkerboardOffscreenLayers: true, // 使用了saveLayer的图形会显示为棋盘格式并随着页面刷新而闪烁
-      checkerboardRasterCacheImages: true, // 做了缓存的静态图片在刷新页面时不会改变棋盘格的颜色；如果棋盘格颜色变了说明被重新缓存了，这是我们要避免的
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: IndexHome(),
-    );
-  }
-
-}
-// Flutter code sample for widgets.SingleChildScrollView.1
-
-// In this example, the children are spaced out equally, unless there's no more
-// room, in which case they stack vertically and scroll.
-//
-// When using this technique, [Expanded] and [Flexible] are not useful, because
-// in both cases the "available space" is infinite (since this is in a viewport).
-// The next section describes a technique for providing a maximum height constraint.
-
-/// This Widget is the main application widget.
-class MyApp extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return WidgetsApp(
-      title: 'Flutter Code Sample',
-      builder: (BuildContext context, Widget navigator) {
-        return MyStatelessWidget();
-      },
-      color: const Color(0xffffffff),
-    );
+    return _createRootWidget();
   }
 }
 
-/// This is the stateless widget that the main application instantiates.
-class MyStatelessWidget extends StatelessWidget {
-  MyStatelessWidget({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints viewportConstraints) {
-        return SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: viewportConstraints.maxHeight,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Container(
-                  // A fixed-height child.
-                  color: const Color(0xff808000), // Yellow
-                  height: 120.0,
-                ),
-                Container(
-                  // Another fixed-height child.
-                  color: const Color(0xff008000), // Green
-                  height: 1020.0,
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
+Widget _createRootWidget() {
+  final debug = false;
+  final routes = HybridRoutes(routes: [
+    PageRoutes(pages: <String, Page<Object, dynamic>>{
+      "home": HomeIndexPage(),
+    }),
+  ]);
+  return MaterialApp(
+    debugShowCheckedModeBanner: false,
+    showPerformanceOverlay: debug,
+    // 使用了saveLayer的图形会显示为棋盘格式并随着页面刷新而闪烁
+    checkerboardOffscreenLayers: debug,
+    // 做了缓存的静态图片在刷新页面时不会改变棋盘格的颜色；如果棋盘格颜色变了说明被重新缓存了，这是我们要避免的
+    checkerboardRasterCacheImages: debug,
+    title: 'Flutter Demo',
+    theme: ThemeData(
+      primarySwatch: Colors.blue,
+    ),
+//    home: IndexHome(),
+    home: routes.buildPage("home", null),
+  );
 }

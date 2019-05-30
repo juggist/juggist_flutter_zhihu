@@ -20,9 +20,9 @@ class JVideoPlayerState extends State<JVideoPlayer> {
   @override
   void initState() {
     super.initState();
+    print("focusIndex:"+widget.focuseIndex.toString()+" ; index:"+widget.index.toString());
     _controller = VideoPlayerController.network(widget.videoPath)
       ..initialize().then((_) {
-        print("focusIndex:"+widget.focuseIndex.toString()+" ; index:"+widget.index.toString());
         if(widget.focuseIndex == widget.index){
           _controller.play();
         }

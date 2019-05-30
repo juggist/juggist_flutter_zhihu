@@ -10,6 +10,8 @@ import 'package:rect_getter/rect_getter.dart';
 
 typedef void DeleteItemListener(int index);
 
+const double _marginTop = 12;
+
 //第二页卡
 class RecommendPage extends StatefulWidget {
   @override
@@ -19,7 +21,6 @@ class RecommendPage extends StatefulWidget {
 }
 
 class _RecommendPageState extends State<RecommendPage> {
-  final double padding = 0;
   List<Map<String, String>> _mockData = List<Map<String, String>>();
   bool _loadMore = true;
   GlobalKey<EasyRefreshState> _easyRefreshKey = GlobalKey<EasyRefreshState>();
@@ -29,7 +30,7 @@ class _RecommendPageState extends State<RecommendPage> {
   //_itemGlobalKeyList记录当前位置的key，方便根据key查到item widget
   //_focuseIndex获取焦点的下标
   List<GlobalKey> _itemGlobalKeyList = List<GlobalKey>();
-  int _focuseIndex = -1;
+  int _firstItemIndex = 1;
 
   //_initRootY是否初始化了root布局相对屏幕的坐标
   //_rootTop,_rootBottom记录root布局相对屏幕的坐标y轴top和bottom的坐标
@@ -88,7 +89,6 @@ class _RecommendPageState extends State<RecommendPage> {
               }
             : null,
         scrollNotificationListener: (ScrollNotification notifaction) {
-
           if (!_initRootY) {
             _initRootY = true;
             _rootTop = context
@@ -104,38 +104,37 @@ class _RecommendPageState extends State<RecommendPage> {
                 context.findRenderObject().semanticBounds.height;
           }
 
-          if(_focuseIndex == -1){
-            var _hasFindFocuse = false;
-            for (var i = 0; i < _itemGlobalKeyList.length; i++) {
-              var itemRect = RectGetter.getRectFromKey(_itemGlobalKeyList[i]);
-              if (itemRect == null) continue;
-              if (!(itemRect.bottom < _rootTop || itemRect.top > _rootBottom)) {
-                if(!_hasFindFocuse){
-                  _hasFindFocuse = true;
-                  setState(() {
-                    _focuseIndex = i;
-                    print("_focuseIndex init:$_focuseIndex");
-                  });
-                }
+          var itemRect =
+              RectGetter.getRectFromKey(_itemGlobalKeyList[_firstItemIndex]);
+          if (itemRect != null) {
+            if (itemRect.top >= (_rootTop + _marginTop)) {
+              var beforeState = _itemGlobalKeyList[_firstItemIndex].currentState;
+              if (beforeState is State<RectGetter>) {
+                print("focusIndex -- before");
+//                beforeState.updateFocuseIndex(_firstItemIndex);
               }
-            }
-          }else{
-            var itemRect = RectGetter.getRectFromKey(_itemGlobalKeyList[_focuseIndex]);
-            if(itemRect != null){
-              if((itemRect.top) >= (_rootTop + padding)){
-                setState(() {
-                  _focuseIndex--;
-                  print("_focuseIndex pull:$_focuseIndex ; " + itemRect.top.toString() +  " ; " + _rootTop.toString());
-                });
-              }else if(itemRect.bottom < (_rootTop + padding)){
-                setState(() {
-                  _focuseIndex++;
-                  print("_focuseIndex push:$_focuseIndex ; " + itemRect.bottom.toString() +  " ; " +  _rootTop.toString());
-                });
+              _firstItemIndex--;
+              var afterState = _itemGlobalKeyList[_firstItemIndex].currentState;
+              if (afterState is ListItemState) {
+                print("focusIndex -- after");
+                afterState.updateFocuseIndex(_firstItemIndex);
+              }
+            } else if (itemRect.bottom < (_rootTop + _marginTop)) {
+              var beforeState = _itemGlobalKeyList[_firstItemIndex].currentState;
+              if (beforeState is ListItemState) {
+                print("focusIndex ++ before");
+                beforeState.updateFocuseIndex(_firstItemIndex);
+              }
+              _firstItemIndex++;
+              var afterState = _itemGlobalKeyList[_firstItemIndex].currentState;
+              if (afterState is ListItemState) {
+                print("focusIndex ++ after");
+                afterState.updateFocuseIndex(_firstItemIndex);
               }
             }
           }
 
+          print("firstItem : $_firstItemIndex");
         },
         refreshHeader: ClassicsHeader(
           key: _headerKey,
@@ -175,8 +174,11 @@ class _RecommendPageState extends State<RecommendPage> {
             ),
           ),
         ),
-        child: ListView.separated(
-            padding: EdgeInsets.only(top: padding),
+
+        ///TODO
+        ///因为ListView.separated导致滑动计算item的top不准确，所以替换ListView.builder。
+        ///separated由item的margin代替
+        child: ListView.builder(
             itemBuilder: (BuildContext context, int index) {
               var _itemGlobalKey = RectGetter.createGlobalKey();
               if (_itemGlobalKeyList.length > index) {
@@ -191,7 +193,7 @@ class _RecommendPageState extends State<RecommendPage> {
                   child: ListItem(
                     index: index,
                     data: _mockData[index],
-                    focuseIndex: _focuseIndex,
+                    focuseIndex: _firstItemIndex,
                     deleteItemListener: (int index) {
                       setState(() {
                         _mockData.removeAt(index);
@@ -201,12 +203,6 @@ class _RecommendPageState extends State<RecommendPage> {
                       });
                     },
                   ));
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(
-                height: padding,
-                color: GlobalColors.bgColor,
-              );
             },
             itemCount: _mockData.length),
       ),
@@ -220,8 +216,12 @@ class ListItem extends StatefulWidget {
   final Map<String, String> data;
   final DeleteItemListener deleteItemListener;
   final int focuseIndex;
+
   ListItem(
-      {@required this.index, @required this.data,@required this.focuseIndex, this.deleteItemListener});
+      {@required this.index,
+      @required this.data,
+      @required this.focuseIndex,
+      this.deleteItemListener});
 
   @override
   State<StatefulWidget> createState() {
@@ -230,10 +230,21 @@ class ListItem extends StatefulWidget {
 }
 
 class ListItemState extends State<ListItem> {
+  int _focuseIndex = -1;
+
+  void updateFocuseIndex(int foucuseIndex) {
+    setState(() {
+      print("foucuseIndex setState:$foucuseIndex");
+      _focuseIndex = foucuseIndex;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: ValueKey(widget.index),
       child: Container(
+        margin: EdgeInsets.only(top: _marginTop),
         padding: EdgeInsets.fromLTRB(22, 20, 22, 4),
         color: Colors.white,
         child: Column(
@@ -379,12 +390,11 @@ class ListItemState extends State<ListItem> {
             padding: EdgeInsets.only(bottom: 10),
             child: SizedBox(
               height: 180,
-              child:null
-//              JVideoPlayer(
-//                videoPath: widget.data["videoPath"],
-//                index: widget.index,
-//                focuseIndex: widget.focuseIndex,
-//              ),
+              child: JVideoPlayer(
+                videoPath: widget.data["videoPath"],
+                index: widget.index,
+                focuseIndex: _focuseIndex,
+              ),
             ),
           ),
           _content(),
@@ -427,5 +437,7 @@ class ListItemState extends State<ListItem> {
   @override
   void initState() {
     super.initState();
+    print(" i am reLife in " + widget.index.toString());
   }
 }
+
