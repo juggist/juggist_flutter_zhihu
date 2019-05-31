@@ -40,7 +40,6 @@ Widget buildView(
   JWindow.appBarHeight = _appBar.preferredSize.height;
   JWindow.statusBarTop = _mediaQueryData.padding.top;
   JWindow.statusBarBottom = _mediaQueryData.padding.bottom;
-  print("appBarHeight = " + _appBar.preferredSize.height.toString() + " ; statusBarTop = " +_mediaQueryData.padding.top.toString());
   return DefaultTabController(
       length: 3,
       child: Scaffold(

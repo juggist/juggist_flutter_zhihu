@@ -2,7 +2,10 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 
 import '../../global_config.dart';
+import '../../mock.dart';
 import 'action.dart';
+import 'component/state.dart';
+import 'list_adapter/action.dart';
 import 'state.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:rect_getter/rect_getter.dart';
@@ -21,11 +24,29 @@ Widget buildView(
       behavior: ScrollOverBehavior(),
       key: state.easyRefreshKey,
       onRefresh: () async {
-        await Future.delayed(Duration(seconds: 2), () {});
+        await Future.delayed(Duration(seconds: 2), () {
+          final List<ItemState> states = List<ItemState>();
+          RecommendData.initData.forEach((data){
+            ItemState state = ItemState(title:data["title"],userAvatarPath: data["userAvatarPath"],userName: data["userName"],
+                userPortrait: data["userPortrait"],content: data["content"],agreeNum: data["agreeNum"],commentNum: data["commentNum"],
+                videoPath: data["videoPath"],picPath: data["picPath"]);
+            states.add(state);
+          });
+          dispatch(RecommendListAdapterActionCreator.refreshAction(states));
+        });
       },
       loadMore: state.loadMore
           ? () async {
-              await Future.delayed(Duration(seconds: 2), () {});
+              await Future.delayed(Duration(seconds: 2), () {
+                final List<ItemState> states = List<ItemState>();
+                RecommendData.addData.forEach((data){
+                  ItemState state = ItemState(title:data["title"],userAvatarPath: data["userAvatarPath"],userName: data["userName"],
+                      userPortrait: data["userPortrait"],content: data["content"],agreeNum: data["agreeNum"],commentNum: data["commentNum"],
+                      videoPath: data["videoPath"],picPath: data["picPath"]);
+                  states.add(state);
+                });
+                dispatch(RecommendListAdapterActionCreator.addAction(states));
+              });
             }
           : null,
       scrollNotificationListener: (ScrollNotification notifaction) {

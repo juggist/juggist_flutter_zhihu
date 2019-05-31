@@ -27,11 +27,11 @@ class _RecommendListAdapterConnector
     List<ItemBean> items = List<ItemBean>();
     state.itemStates.forEach((data) {
       if (data.videoPath.isNotEmpty) {
-        items.add(ItemBean("0", data..marginTop = state.itemSeparated));
+        items.add(ItemBean("0", data));
       } else if (data.picPath.isNotEmpty) {
-        items.add(ItemBean("1", data..marginTop = state.itemSeparated));
+        items.add(ItemBean("1", data));
       } else {
-        items.add(ItemBean("2", data..marginTop = state.itemSeparated));
+        items.add(ItemBean("2", data));
       }
     });
     return items;

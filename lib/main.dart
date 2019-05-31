@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zhihu_flutter/test/page.dart';
 import './home/index.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
@@ -28,10 +29,11 @@ Widget _createRootWidget() {
   final routes = HybridRoutes(routes: [
     PageRoutes(pages: <String, Page<Object, dynamic>>{
       "home": HomeIndexPage(),
+      "test":TestPage(),
     }),
   ]);
   return MaterialApp(
-    debugShowCheckedModeBanner: false,
+    debugShowCheckedModeBanner: debug,
     showPerformanceOverlay: debug,
     // 使用了saveLayer的图形会显示为棋盘格式并随着页面刷新而闪烁
     checkerboardOffscreenLayers: debug,

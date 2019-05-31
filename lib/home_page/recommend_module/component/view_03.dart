@@ -6,8 +6,9 @@ import 'action.dart';
 import 'state.dart';
 
 Widget buildView(ItemState state, Dispatch dispatch, ViewService viewService) {
+  print("key 03 = " + state.uniqueId.toString());
   return GestureDetector(
-    key: ValueKey(state.uniqueId),
+//    key: ValueKey(state.uniqueId),
     child: RectGetter(
         key: state.rectKey,
         child: Container(

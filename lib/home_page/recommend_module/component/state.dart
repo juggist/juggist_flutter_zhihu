@@ -15,7 +15,7 @@ class ItemState implements Cloneable<ItemState> {
   String picPath;
   GlobalKey rectKey;
   bool firstItemIndex;
-  double marginTop;
+  double marginTop = 12;
 
   ItemState(
       {this.uniqueId,
@@ -29,7 +29,7 @@ class ItemState implements Cloneable<ItemState> {
       this.videoPath,
       this.picPath,
       this.firstItemIndex = false,
-      this.marginTop = 0}) {
+      }) {
     uniqueId ??= DateTime.now().toIso8601String();
     this.rectKey ??= RectGetter.createGlobalKey();
   }

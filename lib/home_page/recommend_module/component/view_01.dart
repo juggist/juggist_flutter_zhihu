@@ -8,8 +8,9 @@ import 'package:zhihu_flutter/views/j_video_player.dart';
 
 
 Widget buildView(ItemState state, Dispatch dispatch, ViewService viewService) {
+  print("key 01 = " + state.uniqueId.toString());
   return GestureDetector(
-    key: ValueKey(state.uniqueId),
+//    key: ValueKey(state.uniqueId),
     child: RectGetter(
         key:state.rectKey,
         child: Container(

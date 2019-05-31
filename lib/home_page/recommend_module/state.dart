@@ -8,7 +8,6 @@ import 'package:rect_getter/rect_getter.dart';
 import 'package:flutter/material.dart';
 class RecommendState implements Cloneable<RecommendState> {
   List<ItemState> itemStates;
-  final double itemSeparated = 12;
 
   bool loadMore = true;
   GlobalKey<EasyRefreshState> easyRefreshKey = GlobalKey<EasyRefreshState>();
