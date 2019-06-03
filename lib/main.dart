@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zhihu_flutter/test/page.dart';
-import './home/index.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:fish_redux/fish_redux.dart';
-import 'home/recommend/index.dart';
 import 'home_page/page.dart';
 
 void main() {
@@ -29,7 +26,6 @@ Widget _createRootWidget() {
   final routes = HybridRoutes(routes: [
     PageRoutes(pages: <String, Page<Object, dynamic>>{
       "home": HomeIndexPage(),
-      "test":TestPage(),
     }),
   ]);
   return MaterialApp(

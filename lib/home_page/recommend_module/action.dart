@@ -1,10 +1,10 @@
 import 'package:fish_redux/fish_redux.dart';
 
 //TODO replace with your own action
-enum RecommendAction { initRect }
+enum RecommendAction { updateFocuseIndex }
 
 class RecommendActionCreator {
-  static Action initRectAction(double rootTop,double rootBottom) {
-    return Action(RecommendAction.initRect,payload: {"rootTop":rootTop,"rootBottom":rootBottom});
+  static Action updateFocuseIndexAction(int releaseFocuseIndex,int inFocuseIndex) {
+    return Action(RecommendAction.updateFocuseIndex,payload: {"releaseFocuseIndex":releaseFocuseIndex,"inFocuseIndex":inFocuseIndex});
   }
 }

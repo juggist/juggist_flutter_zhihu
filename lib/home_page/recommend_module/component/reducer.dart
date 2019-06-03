@@ -6,12 +6,7 @@ import 'state.dart';
 Reducer<ItemState> buildReducer() {
   return asReducer(
     <Object, Reducer<ItemState>>{
-      ItemAction.action: _onAction,
     },
   );
 }
 
-ItemState _onAction(ItemState state, Action action) {
-  final ItemState newState = state.clone();
-  return newState;
-}

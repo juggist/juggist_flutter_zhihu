@@ -16,7 +16,6 @@ class JVideoPlayer extends StatefulWidget {
 class JVideoPlayerState extends State<JVideoPlayer> {
   VideoPlayerController _controller;
   String _time = "00:00";
-
   @override
   void initState() {
     super.initState();

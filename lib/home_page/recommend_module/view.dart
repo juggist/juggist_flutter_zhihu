@@ -13,11 +13,11 @@ import 'package:rect_getter/rect_getter.dart';
 Widget buildView(
     RecommendState state, Dispatch dispatch, ViewService viewService) {
   final ListAdapter adapter = viewService.buildAdapter();
-  final context = viewService.context;
-  int _firstItemIndex = 1; //窗口第一个显示item的下标
-  bool _initRootY = false;
-  double _rootTop = 0;
-  double _rootBottom = 0;
+//  final context = viewService.context;
+//  int _firstItemIndex = 0; //窗口第一个显示item的下标
+//  bool _initRootY = false;
+//  double _rootTop = 0;
+//  double _rootBottom = 0;
   return Container(
     color: GlobalColors.bgColor,
     child: EasyRefresh(
@@ -26,10 +26,17 @@ Widget buildView(
       onRefresh: () async {
         await Future.delayed(Duration(seconds: 2), () {
           final List<ItemState> states = List<ItemState>();
-          RecommendData.initData.forEach((data){
-            ItemState state = ItemState(title:data["title"],userAvatarPath: data["userAvatarPath"],userName: data["userName"],
-                userPortrait: data["userPortrait"],content: data["content"],agreeNum: data["agreeNum"],commentNum: data["commentNum"],
-                videoPath: data["videoPath"],picPath: data["picPath"]);
+          RecommendData.initData.forEach((data) {
+            ItemState state = ItemState(
+                title: data["title"],
+                userAvatarPath: data["userAvatarPath"],
+                userName: data["userName"],
+                userPortrait: data["userPortrait"],
+                content: data["content"],
+                agreeNum: data["agreeNum"],
+                commentNum: data["commentNum"],
+                videoPath: data["videoPath"],
+                picPath: data["picPath"]);
             states.add(state);
           });
           dispatch(RecommendListAdapterActionCreator.refreshAction(states));
@@ -39,10 +46,17 @@ Widget buildView(
           ? () async {
               await Future.delayed(Duration(seconds: 2), () {
                 final List<ItemState> states = List<ItemState>();
-                RecommendData.addData.forEach((data){
-                  ItemState state = ItemState(title:data["title"],userAvatarPath: data["userAvatarPath"],userName: data["userName"],
-                      userPortrait: data["userPortrait"],content: data["content"],agreeNum: data["agreeNum"],commentNum: data["commentNum"],
-                      videoPath: data["videoPath"],picPath: data["picPath"]);
+                RecommendData.addData.forEach((data) {
+                  ItemState state = ItemState(
+                      title: data["title"],
+                      userAvatarPath: data["userAvatarPath"],
+                      userName: data["userName"],
+                      userPortrait: data["userPortrait"],
+                      content: data["content"],
+                      agreeNum: data["agreeNum"],
+                      commentNum: data["commentNum"],
+                      videoPath: data["videoPath"],
+                      picPath: data["picPath"]);
                   states.add(state);
                 });
                 dispatch(RecommendListAdapterActionCreator.addAction(states));
@@ -50,32 +64,40 @@ Widget buildView(
             }
           : null,
       scrollNotificationListener: (ScrollNotification notifaction) {
-        if (!_initRootY) {
-          _initRootY = true;
-          _rootTop = context
-              .findRenderObject()
-              .getTransformTo(null)
-              .getTranslation()
-              .y;
-          _rootBottom = context
-                  .findRenderObject()
-                  .getTransformTo(null)
-                  .getTranslation()
-                  .y +
-              context.findRenderObject().semanticBounds.height;
-        }
-        var itemRect = RectGetter.getRectFromKey(
-            state.itemStates[_firstItemIndex].rectKey);
-
-        if (itemRect != null) {
-          if (itemRect.top >= (_rootTop)) {
-            if (_firstItemIndex > 0) _firstItemIndex--;
-          } else if (itemRect.bottom < (_rootTop)) {
-            if (_firstItemIndex < (state.itemStates.length - 1))
-              _firstItemIndex++;
-          }
-        }
-        print("firstItem : $_firstItemIndex");
+//        if (!_initRootY) {
+//          _initRootY = true;
+//          _rootTop = context
+//              .findRenderObject()
+//              .getTransformTo(null)
+//              .getTranslation()
+//              .y;
+//          _rootBottom = context
+//                  .findRenderObject()
+//                  .getTransformTo(null)
+//                  .getTranslation()
+//                  .y +
+//              context.findRenderObject().semanticBounds.height;
+//        }
+//        var itemRect = RectGetter.getRectFromKey(
+//            state.itemStates[_firstItemIndex].rectKey);
+//
+//        if (itemRect != null) {
+//          if (itemRect.top >= (_rootTop) && _firstItemIndex > 0) {
+//            var releaseIndex = _firstItemIndex;
+//            _firstItemIndex--;
+//            var inIndex = _firstItemIndex;
+//            dispatch(RecommendActionCreator.updateFocuseIndexAction(
+//                releaseIndex, inIndex));
+//          } else if (itemRect.bottom < (_rootTop) &&
+//              _firstItemIndex < (state.itemStates.length - 1)) {
+//            var releaseIndex = _firstItemIndex;
+//            _firstItemIndex++;
+//            var inIndex = _firstItemIndex;
+//            dispatch(RecommendActionCreator.updateFocuseIndexAction(
+//                releaseIndex, inIndex));
+//          }
+//        }
+//        print("firstItem : $_firstItemIndex");
       },
       refreshHeader: ClassicsHeader(
         key: state.headerKey,

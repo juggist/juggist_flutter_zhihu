@@ -6,16 +6,16 @@ import 'state.dart';
 Reducer<RecommendState> buildReducer() {
   return asReducer(
     <Object, Reducer<RecommendState>>{
-      RecommendAction.initRect: _rootBottomAction,
+      RecommendAction.updateFocuseIndex: _updateFocuseIndex,
     },
   );
 }
 
-RecommendState _rootBottomAction(RecommendState state, Action action) {
+RecommendState _updateFocuseIndex(RecommendState state, Action action) {
   final RecommendState newState = state.clone();
-  final Map<String, double> payload = action.payload;
+  final releaseFocuseIndex = action.payload["releaseFocuseIndex"];
+  final inFocuseIndex = action.payload["inFocuseIndex"];
   return newState
-    ..initRootY = true
-    ..rootTop = payload["rootTop"]
-    ..rootBottom = payload["rootBottom"];
+    ..itemStates[releaseFocuseIndex].firstItemIndex = false
+    ..itemStates[inFocuseIndex].firstItemIndex = true;
 }

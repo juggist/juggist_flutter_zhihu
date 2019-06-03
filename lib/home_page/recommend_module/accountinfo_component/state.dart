@@ -1,5 +1,6 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:zhihu_flutter/home_page/recommend_module/component/state.dart';
+import 'package:zhihu_flutter/home_page/recommend_module/item_component/state.dart';
 
 class AccountInfoState implements Cloneable<AccountInfoState> {
   String userAvatarPath;
@@ -22,9 +23,9 @@ AccountInfoState initState(Map<String, dynamic> args) {
   return AccountInfoState();
 }
 
-class AccountInfoConnector extends ConnOp<ItemState, AccountInfoState> {
+class AccountInfoConnector extends ConnOp<ItemComponentState, AccountInfoState> {
   @override
-  AccountInfoState get(ItemState state) {
+  AccountInfoState get(ItemComponentState state) {
     return AccountInfoState()
       ..userName = state.userName
       ..userPortrait = state.userPortrait
