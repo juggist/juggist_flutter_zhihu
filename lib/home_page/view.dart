@@ -1,7 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:zhihu_flutter/home_page/recommend_module/page.dart';
-
+import 'package:zhihu_flutter/views/keep_alive_widget.dart';
 import 'state.dart';
 import 'package:zhihu_flutter/global_config.dart';
 

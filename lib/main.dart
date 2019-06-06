@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'home_page/page.dart';
+import 'main/page.dart';
 
 void main() {
   runApp(App());
@@ -13,6 +14,11 @@ void main() {
   }
 }
 
+final routes = HybridRoutes(routes: [
+  PageRoutes(pages: <String, Page<Object, dynamic>>{
+    "home": HomeIndexPage(),
+  }),
+]);
 class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -23,11 +29,7 @@ class App extends StatelessWidget {
 
 Widget _createRootWidget() {
   final debug = false;
-  final routes = HybridRoutes(routes: [
-    PageRoutes(pages: <String, Page<Object, dynamic>>{
-      "home": HomeIndexPage(),
-    }),
-  ]);
+
   return MaterialApp(
     debugShowCheckedModeBanner: debug,
     showPerformanceOverlay: debug,
@@ -39,7 +41,7 @@ Widget _createRootWidget() {
     theme: ThemeData(
       primarySwatch: Colors.blue,
     ),
-//    home: IndexHome(),
-    home: routes.buildPage("home", null),
+    home: MainPage(),
+//    home: routes.buildPage("home", null),
   );
 }

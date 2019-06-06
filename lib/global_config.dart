@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 class GlobalColors {
   static const Color bgColor = Color(0xFFebebeb);
-  static const Color iconColor = Color(0xFF646464);
   static const Color fontBlackColor = Color(0xFF1a1a1a);
   static const Color fontUnselectColor = Color(0xFF999999);
   static const Color fontDetailColor = Color(0xFF444444);
+  static const Color iconColor = Color(0xFF646464);
+  static const Color iconSelectColoro = Color(0xFF0085fe);
 }
 
 class Refresh {
