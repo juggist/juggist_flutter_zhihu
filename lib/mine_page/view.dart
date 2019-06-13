@@ -363,6 +363,109 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
     );
   }
 
+  //回答问题卡片
+  Widget _answerScrollCard() {
+    return Swiper(
+      itemCount: 4,
+      itemBuilder: (BuildContext context, int index) {
+        return index == 0
+            ? Container(
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset(
+                      Constant.ASSETS_IMG + "ic_answer_recommend.webp",
+                      width: 104,
+                      height: 104,
+                    ),
+                    Container(
+                      height: 50,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          FlatButton.icon(
+                            onPressed: null,
+                            icon: Icon(
+                              Icons.add,
+                              color: GlobalColors.labelFontColor,
+                            ),
+                            label: Text(
+                              "添加擅长的领域",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: GlobalColors.labelFontColor,
+                                  fontSize: 18),
+                            ),
+                          ),
+                          Text(
+                            "获取更多问题推荐",
+                            style: TextStyle(
+                                color: GlobalColors.fontBlackColor,
+                                fontWeight: FontWeight.w200,
+                                fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )
+            : Card(
+                margin: EdgeInsets.fromLTRB(0, 0, 0, 18),
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(13, 18, 13, 15),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "如何评价剧场版动画《甲城的卡巴内瑞:海门决战》?",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 28),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                "40 人 关注",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w200,
+                                ),
+                              ),
+                            ),
+                            _todoIconButton(
+                                "忽略",
+                                "w_ic_write.webp",
+                                GlobalColors.labelUnTodoBgColor,
+                                GlobalColors.labelUnTodoColor),
+                            Padding(
+                              padding: EdgeInsets.only(left: 22),
+                              child: _todoIconButton(
+                                  "回答",
+                                  "w_ic_write.webp",
+                                  GlobalColors.labelTodoBgColor,
+                                  GlobalColors.labelFontColor),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+      },
+      itemHeight: 160,
+      itemWidth: JWindow.screenWidth,
+      layout: SwiperLayout.TINDER,
+      loop: false,
+      index: 1,
+    );
+  }
+
   //label底部控件
   Widget _labelBottom(String leadTitle, String buttonTitle, Function() click) {
     return Row(
@@ -619,62 +722,7 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
                     _labelNav("w_ic_write.webp", "回答问题", "更多问题", () {
                       print("回答问题");
                     }),
-                    Swiper(
-                      itemCount: 4,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Card(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 18),
-                          child: Padding(
-                            padding: EdgeInsets.fromLTRB(13, 18, 13, 15),
-                            child: Column(
-                              children: <Widget>[
-                                Text(
-                                  "如何评价剧场版动画《甲城的卡巴内瑞:海门决战》?",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 28),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Text(
-                                          "40 人 关注",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w200,
-                                          ),
-                                        ),
-                                      ),
-                                      _todoIconButton(
-                                          "忽略",
-                                          "w_ic_write.webp",
-                                          GlobalColors.labelUnTodoBgColor,
-                                          GlobalColors.labelUnTodoColor),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 22),
-                                        child: _todoIconButton(
-                                            "回答",
-                                            "w_ic_write.webp",
-                                            GlobalColors.labelTodoBgColor,
-                                            GlobalColors.labelFontColor),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                      itemHeight: 160,
-                      itemWidth: JWindow.screenWidth,
-                      layout: SwiperLayout.TINDER,
-                      loop: false,
-                    )
+                    _answerScrollCard(),
                   ],
                 ),
                 color: Colors.white,
