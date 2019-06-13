@@ -6,12 +6,13 @@ import 'state.dart';
 Reducer<MineState> buildReducer() {
   return asReducer(
     <Object, Reducer<MineState>>{
-      MineAction.action: _onAction,
+      MineAction.updatePinedBarStatus: _updatePinedBarStatus,
     },
   );
 }
 
-MineState _onAction(MineState state, Action action) {
+MineState _updatePinedBarStatus(MineState state, Action action) {
   final MineState newState = state.clone();
-  return newState;
+  final int pinedBarStatus = action.payload;
+  return newState..pinedBarStatus = pinedBarStatus;
 }

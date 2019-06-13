@@ -4,7 +4,6 @@ import 'state.dart';
 
 Effect<MineState> buildEffect() {
   return combineEffects(<Object, Effect<MineState>>{
-    MineAction.action: _onAction,
   });
 }
 

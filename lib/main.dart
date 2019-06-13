@@ -11,7 +11,7 @@ void main() {
   runApp(App());
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle =
-        SystemUiOverlayStyle(statusBarColor: Colors.white);
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
 }
@@ -32,7 +32,7 @@ class App extends StatelessWidget {
 }
 
 Widget _createRootWidget() {
-  final debug = false;
+  final debug = true;
 
   return MaterialApp(
     debugShowCheckedModeBanner: debug,

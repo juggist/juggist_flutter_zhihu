@@ -5,6 +5,9 @@ class GlobalColors {
   static const Color bgGrayColor = Color(0xFFf6f6f6);
   static const Color searchBgColor = Color(0xFF0687ff);
   static const Color searchIconColor = Color(0xFF83c3ff);
+  static const Color searchFontPinedColor = Color(0xFFdbdbdb);
+  static const Color searchIconPinedColor = Color(0xFFdcdcdc);
+  static const Color searchBgPinedColor = Color(0xFFf8f8f8);
   static const Color fontBlackColor = Color(0xFF1a1a1a);
   static const Color fontUnselectColor = Color(0xFF999999);
   static const Color fontDetailColor = Color(0xFF444444);
@@ -17,6 +20,7 @@ class GlobalColors {
   static const Color labelTodoBgColor = Color(0xFFebf5ff);
   static const Color labelUnTodoBgColor = Color(0xFFf7f7f7);
   static const Color labelUnTodoColor = Color(0xFFa2a2a2);
+
 }
 
 class Refresh {

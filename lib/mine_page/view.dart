@@ -48,7 +48,7 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
   }
 
   //搜索栏
-  Widget _searchBar() {
+  Widget _searchBar(bool pined) {
     return Row(
       children: <Widget>[
         Expanded(
@@ -61,7 +61,9 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
               icon: Icon(
                 Icons.search,
                 size: 24,
-                color: GlobalColors.searchIconColor,
+                color: pined
+                    ? GlobalColors.searchIconPinedColor
+                    : GlobalColors.searchIconColor,
               ),
               label: Container(
                 margin: EdgeInsets.only(left: 0),
@@ -69,13 +71,17 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
                   "搜索知乎内容",
                   style: TextStyle(
                       fontSize: 14,
-                      color: GlobalColors.searchIconColor,
+                      color: pined
+                          ? GlobalColors.searchFontPinedColor
+                          : GlobalColors.searchIconColor,
                       fontWeight: FontWeight.w300),
                 ),
               ),
             ),
             decoration: BoxDecoration(
-                color: GlobalColors.searchBgColor,
+                color: pined
+                    ? GlobalColors.searchBgPinedColor
+                    : GlobalColors.searchBgColor,
                 borderRadius: BorderRadius.all(Radius.circular(6))),
           ),
         ),
@@ -86,7 +92,7 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
               Constant.ASSETS_IMG + "profile_ic_more_scan.webp",
               width: 24,
               height: 24,
-              color: Colors.white,
+              color: pined ? GlobalColors.fontUnselectColor : Colors.white,
             )),
         FlatButton(
             onPressed: null,
@@ -94,7 +100,7 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
               Constant.ASSETS_IMG + "profile_ic_more_setting.webp",
               width: 24,
               height: 24,
-              color: Colors.white,
+              color: pined ? GlobalColors.fontUnselectColor : Colors.white,
             )),
       ],
     );
@@ -556,236 +562,257 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
     body: Stack(
       children: <Widget>[
-        CustomScrollView(
-          slivers: <Widget>[
-            //搜索，用户
-            SliverToBoxAdapter(
-              child: Stack(
-                children: <Widget>[
-                  //背景
-                  Container(
-                    height: 250,
-                    decoration: BoxDecoration(
-                      color: GlobalColors.bgGrayColor,
-                      image: DecorationImage(
-                        alignment: Alignment.topCenter,
-                        image: AssetImage(
-                            Constant.ASSETS_IMG + 'profile_more_head.webp'),
+        NotificationListener(
+          child: CustomScrollView(
+            slivers: <Widget>[
+              //搜索，用户
+              SliverToBoxAdapter(
+                child: Stack(
+                  children: <Widget>[
+                    //背景
+                    Container(
+                      height: 250,
+                      decoration: BoxDecoration(
+                        color: GlobalColors.bgGrayColor,
+                        image: DecorationImage(
+                          alignment: Alignment.topCenter,
+                          image: AssetImage(
+                              Constant.ASSETS_IMG + 'profile_more_head.webp'),
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    height: 256,
-                    padding: EdgeInsets.only(
-                        top: JWindow.statusBarTop + 9,
-                        left: 15,
-                        right: 15,
-                        bottom: 10),
-                    child: Column(
-                      children: <Widget>[
-                        //搜索栏
-                        _searchBar(),
-                        //用户信息
-                        _accountInfo(),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            //会员
-            SliverToBoxAdapter(
-              child: Container(
-                padding: EdgeInsets.only(left: 15),
-                color: Colors.white,
-                height: 48,
-                child: Row(
-                  children: <Widget>[
-                    Image.asset(
-                      Constant.ASSETS_IMG + "ic_zhivip.webp",
-                      width: 28,
-                      height: 28,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 8),
-                      child: Text(
-                        "开通盐选会员",
-                        style: TextStyle(
-                            color: GlobalColors.fontGoldColor, fontSize: 14),
+                    Container(
+                      height: 256,
+                      padding: EdgeInsets.only(
+                          top: JWindow.statusBarTop + 9,
+                          left: 15,
+                          right: 15,
+                          bottom: 10),
+                      child: Column(
+                        children: <Widget>[
+                          //搜索栏
+                          _searchBar(false),
+                          //用户信息
+                          _accountInfo(),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-            _line(),
-            //分类
-            SliverGrid(
-                delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                  return Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Image.asset(
-                          Constant.ASSETS_IMG + categoryPics[index],
-                          width: 24,
-                          height: 24,
+              //会员
+              SliverToBoxAdapter(
+                child: Container(
+                  padding: EdgeInsets.only(left: 15),
+                  color: Colors.white,
+                  height: 48,
+                  child: Row(
+                    children: <Widget>[
+                      Image.asset(
+                        Constant.ASSETS_IMG + "ic_zhivip.webp",
+                        width: 28,
+                        height: 28,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 8),
+                        child: Text(
+                          "开通盐选会员",
+                          style: TextStyle(
+                              color: GlobalColors.fontGoldColor, fontSize: 14),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 4),
-                          child: Text(
-                            categoryNames[index],
-                            style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              _line(),
+              //分类
+              SliverGrid(
+                  delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                    return Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Image.asset(
+                            Constant.ASSETS_IMG + categoryPics[index],
+                            width: 24,
+                            height: 24,
                           ),
-                        ),
-                      ],
-                    ),
-                    color: Colors.white,
-                  );
-                }, childCount: 8),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4, childAspectRatio: 27 / 23)),
-            _line(),
-            //设置
-            SliverToBoxAdapter(
-              child: Row(
-                children: List.generate(
-                  4,
-                  (index) {
-                    return Expanded(
-                      child: Container(
-                        height: 84,
-                        color: Colors.white,
-                        child: index == 3
-                            ? null
-                            : Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Image.asset(
-                                    Constant.ASSETS_IMG + settingPics[index],
-                                    width: 24,
-                                    height: 24,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 4),
-                                    child: Text(
-                                      settingNames[index],
-                                      style: TextStyle(fontSize: 12),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 4),
+                            child: Text(
+                              categoryNames[index],
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ),
+                        ],
                       ),
+                      color: Colors.white,
                     );
-                  },
-                ),
-              ),
-            ),
-            //我的卡片
-            SliverToBoxAdapter(
-              child: Container(
-                color: GlobalColors.bgGrayColor,
-                height: 42,
-                padding: EdgeInsets.only(left: 15, right: 0),
+                  }, childCount: 8),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4, childAspectRatio: 27 / 23)),
+              _line(),
+              //设置
+              SliverToBoxAdapter(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text("我的卡片",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold)),
-                    FlatButton.icon(
-                        onPressed: null,
-                        icon: Icon(
-                          Icons.add,
-                          color: GlobalColors.labelFontColor,
-                          size: 14,
+                  children: List.generate(
+                    4,
+                    (index) {
+                      return Expanded(
+                        child: Container(
+                          height: 84,
+                          color: Colors.white,
+                          child: index == 3
+                              ? null
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Image.asset(
+                                      Constant.ASSETS_IMG + settingPics[index],
+                                      width: 24,
+                                      height: 24,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 4),
+                                      child: Text(
+                                        settingNames[index],
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                         ),
-                        label: Text("管理卡片",
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: GlobalColors.labelFontColor))),
-                  ],
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-            //创作者中心
-            SliverToBoxAdapter(
-              child: _artistCenter(),
-            ),
-            _line(),
-            //回答问题
-            SliverToBoxAdapter(
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    _labelNav("w_ic_write.webp", "回答问题", "更多问题", () {
-                      print("回答问题");
-                    }),
-                    _answerScrollCard(),
-                  ],
+              //我的卡片
+              SliverToBoxAdapter(
+                child: Container(
+                  color: GlobalColors.bgGrayColor,
+                  height: 42,
+                  padding: EdgeInsets.only(left: 15, right: 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text("我的卡片",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold)),
+                      FlatButton.icon(
+                          onPressed: null,
+                          icon: Icon(
+                            Icons.add,
+                            color: GlobalColors.labelFontColor,
+                            size: 14,
+                          ),
+                          label: Text("管理卡片",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: GlobalColors.labelFontColor))),
+                    ],
+                  ),
                 ),
-                color: Colors.white,
               ),
-            ),
-            _line(),
-            //视频回答
-            SliverToBoxAdapter(
-              child: Container(
-                padding: EdgeInsets.only(bottom: 18),
-                child: Column(
-                  children: <Widget>[
-                    _labelNav(
-                      "ic_live_videocelllike_ing.webp",
-                      "视频回答",
-                      null,
-                      null,
-                    ),
-                    _labelContent(
-                        "https://pic2.zhimg.com/93f8c1a43c32c42f603a2e5a7c289817_xl.jpg",
-                        "你们平时都是怎么坑宠物的？它会生气吗？",
-                        "395个视频回答 . 8.1K 人关注",
-                        "拍回答",
-                        null),
-                  ],
+              //创作者中心
+              SliverToBoxAdapter(
+                child: _artistCenter(),
+              ),
+              _line(),
+              //回答问题
+              SliverToBoxAdapter(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      _labelNav("w_ic_write.webp", "回答问题", "更多问题", () {
+                        print("回答问题");
+                      }),
+                      _answerScrollCard(),
+                    ],
+                  ),
+                  color: Colors.white,
                 ),
-                color: Colors.white,
               ),
-            ),
-            _line(),
-            //想法
-            SliverToBoxAdapter(
-              child: Container(
-                padding: EdgeInsets.only(bottom: 18),
-                child: Column(
-                  children: <Widget>[
-                    _labelNav(
-                      "ic_reader_share_idea_icon.webp",
-                      "想法",
-                      null,
-                      null,
-                    ),
-                    _labelContent(
-                        "https://pic1.zhimg.com/50/v2-af775286d17063d8713437941d1d9a0d_hd.jpg",
-                        "理想的工作状态",
-                        "395个视频回答 . 8.1K 人关注",
-                        "写想法",
+              _line(),
+              //视频回答
+              SliverToBoxAdapter(
+                child: Container(
+                  padding: EdgeInsets.only(bottom: 18),
+                  child: Column(
+                    children: <Widget>[
+                      _labelNav(
+                        "ic_live_videocelllike_ing.webp",
+                        "视频回答",
                         null,
-                        content: "什么样的工作最符合你的心意"),
-                  ],
+                        null,
+                      ),
+                      _labelContent(
+                          "https://pic2.zhimg.com/93f8c1a43c32c42f603a2e5a7c289817_xl.jpg",
+                          "你们平时都是怎么坑宠物的？它会生气吗？",
+                          "395个视频回答 . 8.1K 人关注",
+                          "拍回答",
+                          null),
+                    ],
+                  ),
+                  color: Colors.white,
                 ),
-                color: Colors.white,
               ),
-            ),
-          ],
+              _line(),
+              //想法
+              SliverToBoxAdapter(
+                child: Container(
+                  padding: EdgeInsets.only(bottom: 18),
+                  child: Column(
+                    children: <Widget>[
+                      _labelNav(
+                        "ic_reader_share_idea_icon.webp",
+                        "想法",
+                        null,
+                        null,
+                      ),
+                      _labelContent(
+                          "https://pic1.zhimg.com/50/v2-af775286d17063d8713437941d1d9a0d_hd.jpg",
+                          "理想的工作状态",
+                          "395个视频回答 . 8.1K 人关注",
+                          "写想法",
+                          null,
+                          content: "什么样的工作最符合你的心意"),
+                    ],
+                  ),
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+          onNotification: (ScrollNotification notification) {
+            int status = 0;
+            double x = notification.metrics.pixels;
+            if (x < 22) {
+              status = 0;
+            } else if (x < 44) {
+              status = 1;
+            } else if (x < 66) {
+              status = 2;
+            } else {
+              status = 3;
+            }
+            if (state.pinedBarStatus != status)
+              dispatch(MineActionCreator.updatePinedBarStatus(status));
+          },
         ),
-//        Opacity(
-//          opacity: 0.5,
-//          child: Container(
-//            color: Colors.white,
-//            height: 100,
-//          ),
-//        )
+        Opacity(
+          opacity: state.pinedBarStatus / 3,
+          child: Container(
+            height: 88,
+            alignment: Alignment.topCenter,
+            color: Colors.white,
+            padding: EdgeInsets.only(
+                top: JWindow.statusBarTop + 9, left: 15, right: 15, bottom: 10),
+            child: _searchBar(true),
+          ),
+        )
       ],
     ),
   );
