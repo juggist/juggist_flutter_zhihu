@@ -6,6 +6,7 @@ import 'package:zhihu_flutter/home_page/recommend_module/item_component/componen
 import 'package:zhihu_flutter/home_page/recommend_module/item_component/component_03.dart';
 import 'package:zhihu_flutter/home_page/recommend_module/item_component/state.dart';
 
+import 'effect.dart';
 import 'reducer.dart';
 import 'package:zhihu_flutter/home_page/recommend_module/state.dart';
 
@@ -19,6 +20,7 @@ class RecommendListAdapterAdapter extends DynamicFlowAdapter<RecommendState> {
           },
           connector: _RecommendListAdapterConnector(),
           reducer: buildReducer(),
+          effect: buildEffect(),
         );
 }
 

@@ -2,6 +2,7 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:zhihu_flutter/home_page/recommend_module/component/action.dart';
 import 'package:zhihu_flutter/home_page/recommend_module/component/state.dart';
 
+import '../../../mock.dart';
 import 'action.dart';
 import 'package:zhihu_flutter/home_page/recommend_module/state.dart';
 

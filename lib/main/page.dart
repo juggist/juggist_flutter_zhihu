@@ -21,9 +21,6 @@ class _MainPageState extends State<MainPage>
       return false;
     }
   });
-  Function tabListener = (){
-
-  };
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +37,11 @@ class _MainPageState extends State<MainPage>
             Container(
               color: Colors.black,
             ),
-            Container(
-              color: Colors.black,
-            )
+            routes.buildPage("mine", null),
           ],
           controller: tabController,
         ),
-        bottomNavigationBar: TabBar(
+        bottomNavigationBar:SafeArea(child: TabBar(
             unselectedLabelColor: Colors.grey,
             indicator: BoxDecoration(),
             isScrollable: false,
@@ -67,7 +62,7 @@ class _MainPageState extends State<MainPage>
               TabBottom(
                 index: 2,
                 iconData: Icons.add_circle,
-                size: 44,
+                size: 40,
                 selectAble: selectAbles[2],
               ),
               TabBottom(
@@ -82,7 +77,8 @@ class _MainPageState extends State<MainPage>
                 iconData: Icons.perm_identity,
                 selectAble: selectAbles[4],
               ),
-            ]));
+            ])));
+
   }
 
   @override

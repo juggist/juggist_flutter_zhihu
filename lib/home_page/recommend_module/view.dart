@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +20,7 @@ Widget buildView(
 //  bool _initRootY = false;
 //  double _rootTop = 0;
 //  double _rootBottom = 0;
+
   return Container(
     color: GlobalColors.bgColor,
     child: EasyRefresh(
@@ -43,24 +46,32 @@ Widget buildView(
         });
       },
       loadMore: state.loadMore
-          ? () async {
-              await Future.delayed(Duration(seconds: 2), () {
-                final List<ItemState> states = List<ItemState>();
-                RecommendData.addData.forEach((data) {
-                  ItemState state = ItemState(
-                      title: data["title"],
-                      userAvatarPath: data["userAvatarPath"],
-                      userName: data["userName"],
-                      userPortrait: data["userPortrait"],
-                      content: data["content"],
-                      agreeNum: data["agreeNum"],
-                      commentNum: data["commentNum"],
-                      videoPath: data["videoPath"],
-                      picPath: data["picPath"]);
-                  states.add(state);
-                });
-                dispatch(RecommendListAdapterActionCreator.addAction(states));
+          ? () {
+              final List<ItemState> states = List<ItemState>();
+              RecommendData.addData.forEach((data) {
+                ItemState state = ItemState(
+                    title: data["title"],
+                    userAvatarPath: data["userAvatarPath"],
+                    userName: data["userName"],
+                    userPortrait: data["userPortrait"],
+                    content: data["content"],
+                    agreeNum: data["agreeNum"],
+                    commentNum: data["commentNum"],
+                    videoPath: data["videoPath"],
+                    picPath: data["picPath"]);
+                states.add(state);
               });
+              final Completer<void> completer = Completer<void>();
+              dispatch(RecommendListAdapterActionCreator.addEffectAction(() {
+                Future.delayed(Duration(seconds: 3), () {
+                  dispatch(RecommendListAdapterActionCreator.addAction(states));
+                  completer.complete();
+                });
+              }));
+//              Future.delayed(Duration(seconds: 4),(){
+//                dispatch(RecommendListAdapterActionCreator.addAction(states));
+//              });
+              return completer.future;
             }
           : null,
       scrollNotificationListener: (ScrollNotification notifaction) {

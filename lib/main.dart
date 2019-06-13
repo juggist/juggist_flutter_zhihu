@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'home_page/page.dart';
 import 'main/page.dart';
+import 'mine_page/page.dart';
 
 void main() {
   runApp(App());
@@ -17,8 +18,10 @@ void main() {
 final routes = HybridRoutes(routes: [
   PageRoutes(pages: <String, Page<Object, dynamic>>{
     "home": HomeIndexPage(),
+    "mine": MinePage()
   }),
 ]);
+
 class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -40,6 +43,12 @@ Widget _createRootWidget() {
     title: 'Flutter Demo',
     theme: ThemeData(
       primarySwatch: Colors.blue,
+      buttonTheme: ButtonThemeData(
+        minWidth: 0,
+        height: 0,
+        padding: EdgeInsets.all(0),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ), //配置button没有最小宽高限制
     ),
     home: MainPage(),
 //    home: routes.buildPage("home", null),
