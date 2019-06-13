@@ -104,7 +104,7 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
   Widget _accountInfo() {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.fromLTRB(8,4,8,8),
+        padding: EdgeInsets.fromLTRB(8, 4, 8, 8),
         margin: EdgeInsets.only(top: 10),
         height: double.infinity,
         width: double.infinity,
@@ -203,9 +203,7 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         Text("我的创作",
                             style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w100
-                            )),
+                                fontSize: 12, fontWeight: FontWeight.w100)),
                       ],
                     ));
                   } else {
@@ -336,10 +334,7 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
       label: Text(
         title,
         style: TextStyle(
-          fontSize: 13,
-          color: textColor,
-          fontWeight: FontWeight.bold
-        ),
+            fontSize: 13, color: textColor, fontWeight: FontWeight.bold),
       ),
       color: bgColor,
       padding: EdgeInsets.fromLTRB(13, 5, 13, 5),
@@ -361,24 +356,21 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
       child: Text(
         title,
         style: TextStyle(
-          fontSize: 13,
-          color: GlobalColors.labelFontColor,
-            fontWeight: FontWeight.bold
-        ),
+            fontSize: 13,
+            color: GlobalColors.labelFontColor,
+            fontWeight: FontWeight.bold),
       ),
     );
   }
+
   //label底部控件
-  Widget _labelBottom(String leadTitle,String buttonTitle,Function() click){
+  Widget _labelBottom(String leadTitle, String buttonTitle, Function() click) {
     return Row(
-      mainAxisAlignment:
-      MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Text(
           leadTitle,
-          style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 12),
+          style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
@@ -388,7 +380,9 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
   }
 
   //label控件
-  Widget _labelContent(String imgPath,String title,String bottomLeadTitle,String buttonTitle,Function() click,{String content}){
+  Widget _labelContent(String imgPath, String title, String bottomLeadTitle,
+      String buttonTitle, Function() click,
+      {String content}) {
     return Container(
       margin: EdgeInsets.only(top: 4),
       height: 98,
@@ -397,14 +391,12 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
             return Container(
               padding: EdgeInsets.only(right: 30),
               child: Column(
-                mainAxisAlignment:
-                MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Row(
                     children: <Widget>[
                       ClipRRect(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(6)),
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
                         child: Image.network(
                           imgPath,
                           width: 48,
@@ -414,37 +406,41 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
                       ),
                       Expanded(
                         child: Container(
-                          child: content == null || content.isEmpty ? Text(
-                            title,
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ):Column(children: <Widget>[
-                            Text(
-                              title,
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Text(
-                              content,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w300),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],),
+                          child: content == null || content.isEmpty
+                              ? Text(
+                                  title,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                )
+                              : Column(
+                                  children: <Widget>[
+                                    Text(
+                                      title,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      content,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w300),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
                           padding: EdgeInsets.only(left: 10),
                         ),
                       ),
                     ],
                   ),
-                  _labelBottom(bottomLeadTitle,buttonTitle,click),
+                  _labelBottom(bottomLeadTitle, buttonTitle, click),
                 ],
               ),
             );
@@ -453,6 +449,7 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
           pageSnapping: true),
     );
   }
+
   return Scaffold(
     body: Stack(
       children: <Widget>[
@@ -622,51 +619,61 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
                     _labelNav("w_ic_write.webp", "回答问题", "更多问题", () {
                       print("回答问题");
                     }),
-                    Card(
-                      margin: EdgeInsets.fromLTRB(15, 0, 15, 18),
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(13, 18, 13, 25),
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              "如何评价剧场版动画《甲城的卡巴内瑞:海门决战》?",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 28),
-                              child: Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Text(
-                                      "40 人 关注",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300,
+                    Swiper(
+                      itemCount: 4,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Card(
+                          margin: EdgeInsets.fromLTRB(0, 0, 0, 18),
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(13, 18, 13, 15),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  "如何评价剧场版动画《甲城的卡巴内瑞:海门决战》?",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 28),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Text(
+                                          "40 人 关注",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w200,
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      _todoIconButton(
+                                          "忽略",
+                                          "w_ic_write.webp",
+                                          GlobalColors.labelUnTodoBgColor,
+                                          GlobalColors.labelUnTodoColor),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 22),
+                                        child: _todoIconButton(
+                                            "回答",
+                                            "w_ic_write.webp",
+                                            GlobalColors.labelTodoBgColor,
+                                            GlobalColors.labelFontColor),
+                                      ),
+                                    ],
                                   ),
-                                  _todoIconButton(
-                                      "忽略",
-                                      "w_ic_write.webp",
-                                      GlobalColors.labelUnTodoBgColor,
-                                      GlobalColors.labelUnTodoColor),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 22),
-                                    child: _todoIconButton(
-                                        "回答",
-                                        "w_ic_write.webp",
-                                        GlobalColors.labelTodoBgColor,
-                                        GlobalColors.labelFontColor),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
+                        );
+                      },
+                      itemHeight: 160,
+                      itemWidth: JWindow.screenWidth,
+                      layout: SwiperLayout.TINDER,
+                      loop: false,
                     )
                   ],
                 ),
@@ -686,7 +693,12 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
                       null,
                       null,
                     ),
-                    _labelContent("https://pic2.zhimg.com/93f8c1a43c32c42f603a2e5a7c289817_xl.jpg","你们平时都是怎么坑宠物的？它会生气吗？","395个视频回答 . 8.1K 人关注","拍回答",null),
+                    _labelContent(
+                        "https://pic2.zhimg.com/93f8c1a43c32c42f603a2e5a7c289817_xl.jpg",
+                        "你们平时都是怎么坑宠物的？它会生气吗？",
+                        "395个视频回答 . 8.1K 人关注",
+                        "拍回答",
+                        null),
                   ],
                 ),
                 color: Colors.white,
@@ -705,7 +717,13 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
                       null,
                       null,
                     ),
-                    _labelContent("https://pic1.zhimg.com/50/v2-af775286d17063d8713437941d1d9a0d_hd.jpg","理想的工作状态","395个视频回答 . 8.1K 人关注","写想法",null,content: "什么样的工作最符合你的心意"),
+                    _labelContent(
+                        "https://pic1.zhimg.com/50/v2-af775286d17063d8713437941d1d9a0d_hd.jpg",
+                        "理想的工作状态",
+                        "395个视频回答 . 8.1K 人关注",
+                        "写想法",
+                        null,
+                        content: "什么样的工作最符合你的心意"),
                   ],
                 ),
                 color: Colors.white,

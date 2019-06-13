@@ -26,6 +26,7 @@ class _MainPageState extends State<MainPage>
   Widget build(BuildContext context) {
     return Scaffold(
         body: TabBarView(
+            physics:NeverScrollableScrollPhysics(),
           children: [
             routes.buildPage("home", null),
             Container(

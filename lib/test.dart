@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_video_player/flutter_simple_video_player.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 // http://184.72.239.149/vod/smil:BigBuckBunny.smil/playlist.m3u8
 class My3App extends StatefulWidget {
@@ -16,14 +17,27 @@ class MyState extends State<My3App>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
+    return Swiper(
+      itemBuilder: (BuildContext context, int index) {
+        return new Image.network(
+          "http://via.placeholder.com/288x188",
+          fit: BoxFit.fill,
+        );
+      },
+      loop: false,
+      itemCount: 3,
+      itemWidth: 300.0,
+      itemHeight: 400.0,
+      layout: SwiperLayout.TINDER,
+    );
+      Scaffold(
         appBar: AppBar(
           title: Text("Demo"),
         ),
         body: Container(
           height: 300.0,
           child: Text("nihao"),
-        ));;
+        ));
   }
 
   @override

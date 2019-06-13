@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:fish_redux/fish_redux.dart';
+import 'package:zhihu_flutter/test.dart';
 import 'home_page/page.dart';
 import 'main/page.dart';
 import 'mine_page/page.dart';
@@ -18,7 +19,7 @@ void main() {
 final routes = HybridRoutes(routes: [
   PageRoutes(pages: <String, Page<Object, dynamic>>{
     "home": HomeIndexPage(),
-    "mine": MinePage()
+    "mine": MinePage(),
   }),
 ]);
 
